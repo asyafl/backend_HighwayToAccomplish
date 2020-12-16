@@ -28,9 +28,6 @@ namespace DAL_HWTA.Migrations
                     b.Property<DateTime>("CheckDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
                     b.Property<long>("UserGoalId")
                         .HasColumnType("INTEGER");
 
@@ -92,6 +89,9 @@ namespace DAL_HWTA.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("GoalId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("StartDate")

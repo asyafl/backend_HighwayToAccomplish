@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL_HWTA.Migrations
 {
     [DbContext(typeof(HwtaDbContext))]
-    [Migration("20201216152802_InitialCreate")]
+    [Migration("20201216184609_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,9 +29,6 @@ namespace DAL_HWTA.Migrations
 
                     b.Property<DateTime>("CheckDate")
                         .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
 
                     b.Property<long>("UserGoalId")
                         .HasColumnType("INTEGER");
@@ -94,6 +91,9 @@ namespace DAL_HWTA.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("GoalId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("StartDate")

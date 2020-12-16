@@ -13,10 +13,11 @@ namespace DAL_HWTA
 
         public void Seed()
         {
-            if (!_dbContext.UserGoals.Any())
+            if (!_dbContext.Goals.Any())
             {
                 CreateGoals();
-            }        }
+            }       
+        }
 
         private void CreateGoals()
         {

@@ -8,8 +8,12 @@ namespace DAL_HWTA.Entities
     public class UserGoal
     {
         public long Id { get; set; }
+
         public long UserId { get; set; }
+
         public long GoalId { get; set; }
+
+        public bool IsActive { get; set; }
         public DateTime StartDate { get; set; }
 
 

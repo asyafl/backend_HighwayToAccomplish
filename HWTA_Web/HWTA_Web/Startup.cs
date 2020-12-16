@@ -56,6 +56,7 @@ namespace HWTA_Web
 
             services.AddTransient<IUsersManager, UsersManager>();
             services.AddTransient<IGoalsManager, GoalsManager>();
+            services.AddTransient<IUserGoalsManager, UserGoalsManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

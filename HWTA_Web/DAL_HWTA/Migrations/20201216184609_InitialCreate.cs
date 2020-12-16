@@ -45,6 +45,7 @@ namespace DAL_HWTA.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<long>(nullable: false),
                     GoalId = table.Column<long>(nullable: false),
+                    IsActive = table.Column<bool>(nullable: false),
                     StartDate = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
@@ -72,7 +73,6 @@ namespace DAL_HWTA.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CheckDate = table.Column<DateTime>(nullable: false),
                     CheckActivity = table.Column<bool>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false),
                     UserGoalId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
