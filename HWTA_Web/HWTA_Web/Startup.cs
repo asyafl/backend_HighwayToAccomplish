@@ -1,16 +1,14 @@
-using HWTA_Web.TokenApp;
+using BLL_HWTA.Concrete;
+using BLL_HWTA.Interfases;
+using BLL_HWTA.TokenApp;
+using DAL_HWTA;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HWTA_Web
 {
@@ -26,21 +24,26 @@ namespace HWTA_Web
                        options.RequireHttpsMetadata = false;
                        options.TokenValidationParameters = new TokenValidationParameters
                        {
-                            ValidateIssuer = true,
-                            ValidIssuer = AuthOptions.ISSUER,
+                           ValidateIssuer = true,
+                           ValidIssuer = AuthOptions.ISSUER,
 
-                           
-                            ValidateAudience = true,
-                            ValidAudience = AuthOptions.AUDIENCE,
-                            ValidateLifetime = true,
 
-                            IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
-                            ValidateIssuerSigningKey = true,
+                           ValidateAudience = true,
+                           ValidAudience = AuthOptions.AUDIENCE,
+                           ValidateLifetime = true,
+
+                           IssuerSigningKey = AuthOptions.GetSymmetricSecurityKey(),
+                           ValidateIssuerSigningKey = true,
                        };
                    });
 
             services.AddSwaggerGen();
             services.AddControllers();
+
+            services.AddDbContext<HwtaDbContext>(
+               options => options.UseSqlite("Data Source=hwta.db"));
+
+            services.AddTransient<IUsersManager, UsersManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -60,7 +63,7 @@ namespace HWTA_Web
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
-            { 
+            {
                 endpoints.MapDefaultControllerRoute();
             });
         }

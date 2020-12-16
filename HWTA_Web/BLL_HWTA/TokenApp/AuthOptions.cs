@@ -1,7 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace HWTA_Web.TokenApp
+namespace BLL_HWTA.TokenApp
 {
     public class AuthOptions
     {
