@@ -1,4 +1,4 @@
-﻿using BLL_HWTA.Interfases;
+﻿using BLL_HWTA.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 

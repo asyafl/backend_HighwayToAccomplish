@@ -1,5 +1,5 @@
 using BLL_HWTA.Concrete;
-using BLL_HWTA.Interfases;
+using BLL_HWTA.Interfaces;
 using BLL_HWTA.TokenApp;
 using DAL_HWTA;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -40,6 +40,8 @@ namespace HWTA_Web
             services.AddSwaggerGen();
             services.AddControllers();
 
+            services.AddAuthorization();
+
             services.AddCors(options =>
             {
                 options.AddDefaultPolicy(builder =>
@@ -53,12 +55,15 @@ namespace HWTA_Web
                options => options.UseSqlite("Data Source=hwta.db"));
 
             services.AddTransient<IUsersManager, UsersManager>();
+            services.AddTransient<IGoalsManager, GoalsManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HwtaDbContext context)
         {
             context.Database.Migrate();
+            var dbSeed = new DataBaseSeed(context);
+            dbSeed.Seed();
 
             if (env.IsDevelopment())
             {
@@ -72,6 +77,9 @@ namespace HWTA_Web
             });
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

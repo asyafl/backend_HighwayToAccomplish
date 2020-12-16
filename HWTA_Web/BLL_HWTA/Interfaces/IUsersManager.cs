@@ -1,15 +1,10 @@
-﻿using BLL_HWTA.Models;
-using System;
-using System.Collections.Generic;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Security.Claims;
 using System.Threading.Tasks;
 
-namespace BLL_HWTA.Interfases
+namespace BLL_HWTA.Interfaces
 {
-   public interface IUsersManager
+    public interface IUsersManager
     {
-        // Task<UserLoginModel> LoginAsync(string email, string password);
         Task<ClaimsIdentity> GetIdentityAsync(string email, string password);
 
         string GetToken(ClaimsIdentity identity);
