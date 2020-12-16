@@ -40,6 +40,15 @@ namespace HWTA_Web
             services.AddSwaggerGen();
             services.AddControllers();
 
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                    builder.SetIsOriginAllowed(_ => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
+            });
+
             services.AddDbContext<HwtaDbContext>(
                options => options.UseSqlite("Data Source=hwta.db"));
 
@@ -63,8 +72,6 @@ namespace HWTA_Web
             });
 
             app.UseRouting();
-
-            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
 
             app.UseEndpoints(endpoints =>
             {
