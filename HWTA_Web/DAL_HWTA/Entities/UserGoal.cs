@@ -16,11 +16,7 @@ namespace DAL_HWTA.Entities
         public bool IsActive { get; set; }
         public DateTime StartDate { get; set; }
 
-        public DateTime EndDate { get; set; }
-
         public DateTime LastUpdateDate { get; set; }
-
-        public int Regularity { get; set; }
 
         public int Value { get; set; }
 

@@ -18,45 +18,44 @@ namespace BLL_HWTA.Concrete
         {
             _dbContext = dbContext;
         }
-        public async Task<bool> CreateGoalAsync(long userId, long goalId)
+        public async Task CreateUserGoalAsync(long userId, string title,
+                                            string description, DateTime endDate, int regularity, int value )
         {
-            var checkGoalId = await _dbContext.Goals.AnyAsync(x => x.Id == goalId);
+         
             var checkUserId = await _dbContext.Users.AnyAsync(x => x.Id == userId);
-
-            if (!checkGoalId)
-            {
-                throw new ArgumentException("No such goal id");
-            }
 
             if (!checkUserId)
             {
                 throw new ArgumentException("No such userId");
             }
 
-
-            var checkGoal = await _dbContext.UserGoals
-                .FirstOrDefaultAsync(x => x.GoalId == goalId && x.UserId == userId && x.IsActive == true);
-
-            if (checkGoal != null)
+            var newGoal = new Goal
             {
-                return false;
-            }
-            else
-            {
-                _dbContext.UserGoals.Add(new UserGoal
-                {
-                    UserId = userId,
-                    GoalId = goalId,
-                    StartDate = DateTime.Now,
-                    IsActive = true
-                });
+                Name = title,
+                Description = description,
+                GoalType = GoalType.Custom,
+                EndDate = endDate,
+                Regularity = regularity
+            };
 
+
+                _dbContext.Goals.Add(newGoal);
+
+            var userGoal = new UserGoal 
+            { 
+                UserId = userId,
+                Goal = newGoal,
+                StartDate = DateTime.Now,
+                IsActive = true,
+                Progress = 0,
+                LastUpdateDate = DateTime.Now,
+                Value = value
+            };
+
+            _dbContext.UserGoals.Add(userGoal);
+                
                 await _dbContext.SaveChangesAsync();
-                return true;
             }
 
-
-
-        }
     }
 }

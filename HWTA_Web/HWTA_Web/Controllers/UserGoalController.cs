@@ -23,21 +23,15 @@ namespace HWTA_Web.Controllers
             _userGoalsManager = userGoalsManager;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddNewGoal(CreateUserGoalRequest request)
+        [HttpPost("/addNewUserGoal")]
+        public async Task<IActionResult> AddNewUserGoal(CreateUserGoalRequest request)
         {
-           var userId = User.ParseUserId();
-           var result =   await _userGoalsManager.CreateGoalAsync(userId, request.GoalId);
+            var userId = User.ParseUserId();
+            await _userGoalsManager.CreateUserGoalAsync(userId, request.GoalTitle,
+                request.Description, request.EndDate, request.Regularity, request.Value);
 
-            if (result)
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
+            return Ok();
+
         }
-
     }
 }
