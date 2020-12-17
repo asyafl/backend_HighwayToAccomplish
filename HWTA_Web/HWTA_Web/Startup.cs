@@ -42,29 +42,21 @@ namespace HWTA_Web
 
             services.AddAuthorization();
 
-            services.AddCors(options =>
-            {
-                options.AddDefaultPolicy(builder =>
-                    builder.SetIsOriginAllowed(_ => true)
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials());
-            });
-
             services.AddDbContext<HwtaDbContext>(
-               options => options.UseSqlite("Data Source=hwta.db"));
+               options => options.UseSqlite("Data Source=hwta2.db"));
 
-            services.AddTransient<IUsersManager, UsersManager>();
+            services.AddTransient<IAccountManager, AccountsManager>();
             services.AddTransient<IGoalsManager, GoalsManager>();
             services.AddTransient<IUserGoalsManager, UserGoalsManager>();
+            services.AddTransient<IUserManager, UserManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HwtaDbContext context)
         {
             context.Database.Migrate();
-            var dbSeed = new DataBaseSeed(context);
-            dbSeed.Seed();
+            // var dbSeed = new DataBaseSeed(context);
+            // dbSeed.Seed();
 
             if (env.IsDevelopment())
             {
@@ -78,6 +70,11 @@ namespace HWTA_Web
             });
 
             app.UseRouting();
+
+            app.UseCors(builder => builder.SetIsOriginAllowed(_ => true)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .AllowCredentials());
 
             app.UseAuthentication();
             app.UseAuthorization();

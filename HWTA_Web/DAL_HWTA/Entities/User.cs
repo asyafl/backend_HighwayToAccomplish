@@ -24,6 +24,10 @@ namespace DAL_HWTA.Entities
         
         public Role Role { get; set; }
 
+        public string ContentType { get; set; }
+
+        public byte[] ProfilePicture { get; set; }
+
 
         [InverseProperty(nameof(UserGoal.User))]
         public List<UserGoal> UserGoals { get; set; }

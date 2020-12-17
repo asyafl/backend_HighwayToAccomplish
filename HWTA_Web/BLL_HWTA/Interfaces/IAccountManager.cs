@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace BLL_HWTA.Interfaces
 {
-    public interface IUsersManager
+    public interface IAccountManager
     {
         Task<ClaimsIdentity> GetIdentityAsync(string email, string password);
 

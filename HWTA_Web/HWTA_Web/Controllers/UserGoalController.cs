@@ -26,7 +26,7 @@ namespace HWTA_Web.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewGoal(CreateUserGoalRequest request)
         {
-            var userId = User.ParseUserId();
+           var userId = User.ParseUserId();
            var result =   await _userGoalsManager.CreateGoalAsync(userId, request.GoalId);
 
             if (result)

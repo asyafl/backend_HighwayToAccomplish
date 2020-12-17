@@ -15,10 +15,10 @@ using System.Threading.Tasks;
 
 namespace BLL_HWTA.Concrete
 {
-    public class UsersManager : IUsersManager
+    public class AccountsManager : IAccountManager
     {
         private readonly HwtaDbContext _dbContext;
-        public UsersManager(HwtaDbContext hwtaDbContext)
+        public AccountsManager(HwtaDbContext hwtaDbContext)
         {
             _dbContext = hwtaDbContext;
         }

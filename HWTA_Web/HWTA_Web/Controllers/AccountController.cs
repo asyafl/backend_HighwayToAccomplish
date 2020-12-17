@@ -1,4 +1,5 @@
 ﻿using BLL_HWTA.Interfaces;
+using BLL_HWTA.Requests;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -9,22 +10,22 @@ namespace HWTA_Web.Controllers
     public class AccountController : Controller
     {
 
-        private readonly IUsersManager _userManager;
-        public AccountController(IUsersManager userManager)
+        private readonly IAccountManager _accountManager;
+        public AccountController(IAccountManager accountManager)
         {
-            _userManager = userManager;
+            _accountManager = accountManager;
         }
 
         [HttpPost("/auth")]
-        public async Task<IActionResult> Auth(string email, string password)
+        public async Task<IActionResult> Auth(AccountLoginRequest request)
         {
-            var identity = await _userManager.GetIdentityAsync(email, password);
+            var identity = await _accountManager.GetIdentityAsync(request.Email, request.Password );
             if (identity == null)
             {
                 return BadRequest(new { errorText = "Invalid username or password." });
             }
 
-            var jwt = _userManager.GetToken(identity);
+            var jwt = _accountManager.GetToken(identity);
 
             var response = new
             {
@@ -37,15 +38,15 @@ namespace HWTA_Web.Controllers
 
 
         [HttpPost("/registration")]
-        public async Task<IActionResult> Registration(string email, string password, string firstName, string lastName)
+        public async Task<IActionResult> Registration(AccountCreateRequest request)
         {
-            var newUser = await _userManager.AddUserAsync(email, password, firstName, lastName);
+            var newUser = await _accountManager.AddUserAsync(request.Email, request.Password, request.FirstName, request.LastName);
 
             if (newUser)
             {
-                var identity = await _userManager.GetIdentityAsync(email, password);
+                var identity = await _accountManager.GetIdentityAsync(request.Email, request.Password);
 
-                var jwt = _userManager.GetToken(identity);
+                var jwt = _accountManager.GetToken(identity);
 
                 var response = new
                 {
