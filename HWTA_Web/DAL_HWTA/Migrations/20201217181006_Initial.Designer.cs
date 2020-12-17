@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL_HWTA.Migrations
 {
     [DbContext(typeof(HwtaDbContext))]
-    [Migration("20201216184609_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20201217181006_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -18,36 +18,26 @@ namespace DAL_HWTA.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.10");
 
-            modelBuilder.Entity("DAL_HWTA.Entities.DailyUserGoal", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("CheckActivity")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("CheckDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<long>("UserGoalId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserGoalId");
-
-                    b.ToTable("DailyUserGoal");
-                });
-
             modelBuilder.Entity("DAL_HWTA.Entities.Goal", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("GoalType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Regularity")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -59,6 +49,9 @@ namespace DAL_HWTA.Migrations
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("ContentType")
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -74,6 +67,9 @@ namespace DAL_HWTA.Migrations
 
                     b.Property<byte[]>("PasswordHash")
                         .IsRequired()
+                        .HasColumnType("BLOB");
+
+                    b.Property<byte[]>("ProfilePicture")
                         .HasColumnType("BLOB");
 
                     b.Property<int>("Role")
@@ -96,10 +92,19 @@ namespace DAL_HWTA.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("LastUpdateDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Progress")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("TEXT");
 
                     b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Value")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -109,15 +114,6 @@ namespace DAL_HWTA.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserGoals");
-                });
-
-            modelBuilder.Entity("DAL_HWTA.Entities.DailyUserGoal", b =>
-                {
-                    b.HasOne("DAL_HWTA.Entities.UserGoal", "UserGoal")
-                        .WithMany("DailyUserGoals")
-                        .HasForeignKey("UserGoalId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL_HWTA.Entities.UserGoal", b =>

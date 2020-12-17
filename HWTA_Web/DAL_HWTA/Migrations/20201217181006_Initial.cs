@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DAL_HWTA.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,7 +13,11 @@ namespace DAL_HWTA.Migrations
                 {
                     Id = table.Column<long>(nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
+                    GoalType = table.Column<int>(nullable: false),
+                    EndDate = table.Column<DateTime>(nullable: false),
+                    Regularity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -30,7 +34,9 @@ namespace DAL_HWTA.Migrations
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     PasswordHash = table.Column<byte[]>(nullable: false),
-                    Role = table.Column<int>(nullable: false)
+                    Role = table.Column<int>(nullable: false),
+                    ContentType = table.Column<string>(nullable: true),
+                    ProfilePicture = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,7 +52,10 @@ namespace DAL_HWTA.Migrations
                     UserId = table.Column<long>(nullable: false),
                     GoalId = table.Column<long>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false)
+                    StartDate = table.Column<DateTime>(nullable: false),
+                    LastUpdateDate = table.Column<DateTime>(nullable: false),
+                    Value = table.Column<int>(nullable: false),
+                    Progress = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -65,32 +74,6 @@ namespace DAL_HWTA.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "DailyUserGoal",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    CheckDate = table.Column<DateTime>(nullable: false),
-                    CheckActivity = table.Column<bool>(nullable: false),
-                    UserGoalId = table.Column<long>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DailyUserGoal", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DailyUserGoal_UserGoals_UserGoalId",
-                        column: x => x.UserGoalId,
-                        principalTable: "UserGoals",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_DailyUserGoal_UserGoalId",
-                table: "DailyUserGoal",
-                column: "UserGoalId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_UserGoals_GoalId",
                 table: "UserGoals",
@@ -104,9 +87,6 @@ namespace DAL_HWTA.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "DailyUserGoal");
-
             migrationBuilder.DropTable(
                 name: "UserGoals");
 

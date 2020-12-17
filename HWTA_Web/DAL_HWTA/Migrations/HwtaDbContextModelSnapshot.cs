@@ -22,8 +22,20 @@ namespace DAL_HWTA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("GoalType")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("Regularity")
+                        .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
@@ -72,9 +84,6 @@ namespace DAL_HWTA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<long>("GoalId")
                         .HasColumnType("INTEGER");
 
@@ -85,9 +94,6 @@ namespace DAL_HWTA.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Progress")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Regularity")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("StartDate")
