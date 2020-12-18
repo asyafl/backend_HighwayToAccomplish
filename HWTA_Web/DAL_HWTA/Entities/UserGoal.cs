@@ -14,13 +14,12 @@ namespace DAL_HWTA.Entities
         public long GoalId { get; set; }
 
         public bool IsActive { get; set; }
-        public DateTime StartDate { get; set; }
 
         public DateTime LastUpdateDate { get; set; }
 
-        public int Value { get; set; }
-
         public int Progress { get; set; }
+
+        public bool IsCompleted { get; set; }
 
 
 

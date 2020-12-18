@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL_HWTA.Migrations
 {
     [DbContext(typeof(HwtaDbContext))]
-    [Migration("20201217181006_Initial")]
+    [Migration("20201218144233_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,15 @@ namespace DAL_HWTA.Migrations
 
                     b.Property<int>("Regularity")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ValueType")
+                        .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
@@ -92,19 +101,16 @@ namespace DAL_HWTA.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Progress")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<long>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Value")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

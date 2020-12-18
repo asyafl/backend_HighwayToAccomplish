@@ -16,8 +16,11 @@ namespace DAL_HWTA.Migrations
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     GoalType = table.Column<int>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
-                    Regularity = table.Column<int>(nullable: false)
+                    Regularity = table.Column<int>(nullable: false),
+                    Value = table.Column<int>(nullable: false),
+                    ValueType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -52,10 +55,9 @@ namespace DAL_HWTA.Migrations
                     UserId = table.Column<long>(nullable: false),
                     GoalId = table.Column<long>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
                     LastUpdateDate = table.Column<DateTime>(nullable: false),
-                    Value = table.Column<int>(nullable: false),
-                    Progress = table.Column<int>(nullable: false)
+                    Progress = table.Column<int>(nullable: false),
+                    IsCompleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {

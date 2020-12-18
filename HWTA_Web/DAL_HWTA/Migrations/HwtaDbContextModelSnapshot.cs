@@ -37,6 +37,15 @@ namespace DAL_HWTA.Migrations
                     b.Property<int>("Regularity")
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Value")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ValueType")
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Goals");
@@ -90,19 +99,16 @@ namespace DAL_HWTA.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("Progress")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
-
                     b.Property<long>("UserId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Value")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");

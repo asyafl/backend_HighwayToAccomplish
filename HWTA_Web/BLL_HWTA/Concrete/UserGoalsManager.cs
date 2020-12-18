@@ -19,7 +19,7 @@ namespace BLL_HWTA.Concrete
             _dbContext = dbContext;
         }
         public async Task CreateUserGoalAsync(long userId, string title,
-                                            string description, DateTime endDate, int regularity, int value )
+                                            string description, DateTime startDate, DateTime endDate, int regularity, int value, string valueType )
         {
          
             var checkUserId = await _dbContext.Users.AnyAsync(x => x.Id == userId);
@@ -34,22 +34,31 @@ namespace BLL_HWTA.Concrete
                 Name = title,
                 Description = description,
                 GoalType = GoalType.Custom,
+                StartDate = startDate,
                 EndDate = endDate,
-                Regularity = regularity
+                Regularity = regularity,
+                Value = value,
+                ValueType = valueType
             };
 
 
                 _dbContext.Goals.Add(newGoal);
 
-            var userGoal = new UserGoal 
-            { 
+            var isActive = true;
+            if(startDate > DateTime.Now)
+            {
+                isActive = false;
+            }
+
+            var userGoal = new UserGoal
+            {
                 UserId = userId,
                 Goal = newGoal,
-                StartDate = DateTime.Now,
-                IsActive = true,
+                IsActive = isActive,
                 Progress = 0,
                 LastUpdateDate = DateTime.Now,
-                Value = value
+                IsCompleted = false
+
             };
 
             _dbContext.UserGoals.Add(userGoal);

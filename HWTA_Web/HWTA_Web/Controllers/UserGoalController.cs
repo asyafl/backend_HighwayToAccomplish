@@ -28,7 +28,7 @@ namespace HWTA_Web.Controllers
         {
             var userId = User.ParseUserId();
             await _userGoalsManager.CreateUserGoalAsync(userId, request.GoalTitle,
-                request.Description, request.EndDate, request.Regularity, request.Value);
+                request.Description, request.StartDate,  request.EndDate, request.Regularity, request.Value, request.ValueType);
 
             return Ok();
 
