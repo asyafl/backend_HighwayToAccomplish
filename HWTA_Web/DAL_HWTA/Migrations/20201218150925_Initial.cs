@@ -20,7 +20,8 @@ namespace DAL_HWTA.Migrations
                     EndDate = table.Column<DateTime>(nullable: false),
                     Regularity = table.Column<int>(nullable: false),
                     Value = table.Column<int>(nullable: false),
-                    ValueType = table.Column<string>(nullable: true)
+                    ValueType = table.Column<string>(nullable: true),
+                    IsActive = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,7 +55,6 @@ namespace DAL_HWTA.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<long>(nullable: false),
                     GoalId = table.Column<long>(nullable: false),
-                    IsActive = table.Column<bool>(nullable: false),
                     LastUpdateDate = table.Column<DateTime>(nullable: false),
                     Progress = table.Column<int>(nullable: false),
                     IsCompleted = table.Column<bool>(nullable: false)
@@ -76,6 +76,31 @@ namespace DAL_HWTA.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "GoalProgress",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    ActivityDate = table.Column<DateTime>(nullable: false),
+                    UserGoalId = table.Column<long>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GoalProgress", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GoalProgress_UserGoals_UserGoalId",
+                        column: x => x.UserGoalId,
+                        principalTable: "UserGoals",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GoalProgress_UserGoalId",
+                table: "GoalProgress",
+                column: "UserGoalId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_UserGoals_GoalId",
                 table: "UserGoals",
@@ -89,6 +114,9 @@ namespace DAL_HWTA.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "GoalProgress");
+
             migrationBuilder.DropTable(
                 name: "UserGoals");
 

@@ -13,12 +13,6 @@ namespace DAL_HWTA.Entities
 
         public long GoalId { get; set; }
 
-        public bool IsActive { get; set; }
-
-        public DateTime LastUpdateDate { get; set; }
-
-        public int Progress { get; set; }
-
         public bool IsCompleted { get; set; }
 
 
@@ -29,6 +23,9 @@ namespace DAL_HWTA.Entities
 
         [ForeignKey(nameof(GoalId))]
         public Goal Goal { get; set; }
+
+        [InverseProperty(nameof(GoalProgress.UserGoal))]
+        public List<GoalProgress> GoalProgresses { get; set; } 
 
 
     }

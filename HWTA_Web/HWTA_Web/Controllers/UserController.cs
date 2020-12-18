@@ -32,7 +32,7 @@ namespace HWTA_Web.Controllers
             return File(result.Picture, result.ContentType);
         }
 
-        [HttpPost]
+        [HttpPost("/LoadProfilePicture")]
         public async Task<IActionResult> LoadProfilePicture(IFormFile uploadedFile)
         {
             var userId = User.ParseUserId();

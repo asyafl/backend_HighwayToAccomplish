@@ -33,5 +33,23 @@ namespace HWTA_Web.Controllers
             return Ok();
 
         }
+
+        [HttpPost("/getAllActiveUserGoals")]
+        public async Task<IActionResult> GetAllActiveUserGoals()
+        {
+            var userId = User.ParseUserId();
+            var model = await _userGoalsManager.GetAllActiveUserGoalsAsync(userId);
+
+            return Ok(model);
+        }
+
+        [HttpPost("/getAllCompletedUserGoals")]
+        public async Task<IActionResult> GetAllCompletedUserGoals()
+        {
+            var userId = User.ParseUserId();
+            var model = await _userGoalsManager.GetAllCompletedUserGoalsAsync(userId);
+
+            return Ok(model);
+        }
     }
 }

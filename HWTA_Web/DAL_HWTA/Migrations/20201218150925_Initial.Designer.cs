@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL_HWTA.Migrations
 {
     [DbContext(typeof(HwtaDbContext))]
-    [Migration("20201218144233_Initial")]
+    [Migration("20201218150925_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,6 +33,9 @@ namespace DAL_HWTA.Migrations
                     b.Property<int>("GoalType")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -51,6 +54,25 @@ namespace DAL_HWTA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Goals");
+                });
+
+            modelBuilder.Entity("DAL_HWTA.Entities.GoalProgress", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("ActivityDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("UserGoalId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserGoalId");
+
+                    b.ToTable("GoalProgress");
                 });
 
             modelBuilder.Entity("DAL_HWTA.Entities.User", b =>
@@ -98,9 +120,6 @@ namespace DAL_HWTA.Migrations
                     b.Property<long>("GoalId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
                     b.Property<bool>("IsCompleted")
                         .HasColumnType("INTEGER");
 
@@ -120,6 +139,15 @@ namespace DAL_HWTA.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserGoals");
+                });
+
+            modelBuilder.Entity("DAL_HWTA.Entities.GoalProgress", b =>
+                {
+                    b.HasOne("DAL_HWTA.Entities.UserGoal", "UserGoal")
+                        .WithMany("GoalProgresses")
+                        .HasForeignKey("UserGoalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL_HWTA.Entities.UserGoal", b =>

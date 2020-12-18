@@ -19,6 +19,7 @@ namespace DAL_HWTA.Entities
 
         public string ValueType { get; set; }
 
+        public bool IsActive { get; set; }
 
         [InverseProperty(nameof(UserGoal.Goal))]
         public List<UserGoal> UserGoals { get; set; } 
