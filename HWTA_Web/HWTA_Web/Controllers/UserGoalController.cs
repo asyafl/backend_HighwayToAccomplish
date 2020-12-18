@@ -34,7 +34,7 @@ namespace HWTA_Web.Controllers
 
         }
 
-        [HttpPost("/getAllActiveUserGoals")]
+        [HttpGet("/getAllActiveUserGoals")]
         public async Task<IActionResult> GetAllActiveUserGoals()
         {
             var userId = User.ParseUserId();
@@ -43,7 +43,7 @@ namespace HWTA_Web.Controllers
             return Ok(model);
         }
 
-        [HttpPost("/getAllCompletedUserGoals")]
+        [HttpGet("/getAllCompletedUserGoals")]
         public async Task<IActionResult> GetAllCompletedUserGoals()
         {
             var userId = User.ParseUserId();
