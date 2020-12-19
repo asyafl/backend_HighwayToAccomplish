@@ -39,6 +39,7 @@ namespace BLL_HWTA.Concrete
             else
             {
                 checkGoal.IsCompleted = true;
+                checkGoal.FinishDate = DateTime.Now;
                 await _dbContext.SaveChangesAsync();
             }
 
