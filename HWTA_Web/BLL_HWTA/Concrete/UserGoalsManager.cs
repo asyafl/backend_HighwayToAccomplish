@@ -19,6 +19,31 @@ namespace BLL_HWTA.Concrete
         {
             _dbContext = dbContext;
         }
+
+        public async Task CompleteUserGoalAsync(long userId, long goalId, bool isCompleted)
+        {
+            var checkUserId = await _dbContext.Users.AnyAsync(x => x.Id == userId);
+
+            if (!checkUserId)
+            {
+                throw new ArgumentException("No such user");
+            }
+
+            var checkGoal = await _dbContext.UserGoals
+                .FirstOrDefaultAsync(x => x.User.Id == userId && x.Goal.Id == goalId && isCompleted == false);
+
+            if(checkGoal == null)
+            {
+                throw new ArgumentException("No such goal");
+            }
+            else
+            {
+                checkGoal.IsCompleted = true;
+                await _dbContext.SaveChangesAsync();
+            }
+
+        }
+
         public async Task CreateUserGoalAsync(long userId, string title,
                                             string description, DateTime startDate, DateTime endDate, int regularity, int value, string valueType )
         {
@@ -124,6 +149,7 @@ namespace BLL_HWTA.Concrete
 
                 result.Add(new UserGoalsModel
                 {
+                    GoalId = g.Goal.Id,
                     NameGoal = g.Goal.Name,
                     Description = g.Goal.Description,
                     StartDate = g.Goal.StartDate,

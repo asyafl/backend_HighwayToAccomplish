@@ -6,6 +6,7 @@ namespace BLL_HWTA.Models
 {
    public class UserGoalsModel
     {
+        public long GoalId { get; set; }
         public string NameGoal { get; set; }
         public string Description { get; set; }
         public int Progress { get; set; }

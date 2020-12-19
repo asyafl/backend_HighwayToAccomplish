@@ -10,5 +10,7 @@ namespace BLL_HWTA.Interfaces
     {
         Task CreateUserGoalAsync(long userId, string title,string description, DateTime startDate, DateTime endDate, int regularity, int value, string valueType);
         Task<List<UserGoalsModel>> GetAllUserGoalsAsync(long userId);
+
+        Task CompleteUserGoalAsync(long userId, long goalId, bool isCompleted);
     }
 }

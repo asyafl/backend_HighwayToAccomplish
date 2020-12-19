@@ -44,6 +44,12 @@ namespace HWTA_Web.Controllers
             return Ok(result);
         }
 
-
+        [HttpPost("/completeUserGoal")]
+        public async Task<IActionResult> CompleteUserGoal(CompleteUserGoalRequest request)
+        {
+            var userId = User.ParseUserId();
+            await _userGoalsManager.CompleteUserGoalAsync(userId, request.GoalId, request.IsCompleted);
+            return Ok();
+        }
     }
 }
