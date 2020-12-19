@@ -35,7 +35,8 @@ namespace HWTA_Web.Controllers
             }
             else
             {
-                return File(file.Picture, file.ContentType); 
+                var strResult = $"data:{file.ContentType};base64, " + Convert.ToBase64String(file.Picture); 
+                return Ok(strResult); 
             }
 
             
