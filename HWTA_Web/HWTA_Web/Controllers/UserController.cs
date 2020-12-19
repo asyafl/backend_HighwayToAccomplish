@@ -27,9 +27,18 @@ namespace HWTA_Web.Controllers
         public async Task<IActionResult> GetProfilePicture()
         {
             var userId = User.ParseUserId();
-            var result = await _userManager.GetUserProfilePictureAsync(userId);
+            var file = await _userManager.GetUserProfilePictureAsync(userId);
 
-            return File(result.Picture, result.ContentType);
+            if(file.ContentType == null || file.Picture == null)
+            {
+                return NotFound();
+            }
+            else
+            {
+                return File(file.Picture, file.ContentType); 
+            }
+
+            
         }
 
         [HttpPost("/LoadProfilePicture")]
