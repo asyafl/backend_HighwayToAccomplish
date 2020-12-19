@@ -43,14 +43,11 @@ namespace HWTA_Web
             services.AddAuthorization();
 
             services.AddDbContext<HwtaDbContext>(
-               options => options.UseSqlite("Data Source=hwta5.db"));
+               options => options.UseSqlite("Data Source=hwta6.db"));
 
             services.AddTransient<IAccountManager, AccountsManager>();
-            services.AddTransient<IUserActiveGoalsManager, UserActiveGoalsManager>();
-            services.AddTransient<IUserCompletedGoalsManager, UserCompletedGoalsManager>();
             services.AddTransient<IUserGoalsManager, UserGoalsManager>();
             services.AddTransient<IUserManager, UserManager>();
-            services.AddTransient<IUserPlannedGoalsManager, UserPlannedGoalsManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -34,8 +34,16 @@ namespace HWTA_Web.Controllers
 
         }
 
-       
+       [HttpGet("/getAllUserGoals")]
+       public async Task<IActionResult> GetAllUserGoals()
+        {
+            var userId = User.ParseUserId();
 
-      
+           var result =  await _userGoalsManager.GetAllUserGoalsAsync(userId);
+
+            return Ok(result);
+        }
+
+
     }
 }

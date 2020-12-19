@@ -58,6 +58,7 @@ namespace BLL_HWTA.Concrete
             {
                 UserId = userId,
                 Goal = newGoal,
+                FinishDate = null,
                 IsCompleted = false
             };
 
@@ -66,8 +67,82 @@ namespace BLL_HWTA.Concrete
                 await _dbContext.SaveChangesAsync();
             }
 
-        
+        public async Task<List<UserGoalsModel>> GetAllUserGoalsAsync(long userId)
+        {
+            var checkUserId = await _dbContext.Users.AnyAsync(x => x.Id == userId);
 
-       
+            if (!checkUserId)
+            {
+                throw new ArgumentException("No such user");
+            }
+
+            var userGoals = (await _dbContext.UserGoals
+                .Where(x => x.UserId == userId  && x.Goal.GoalType == GoalType.Custom)
+                .Select(x => new {
+                    UserGoal = x,
+                    Goal = x.Goal,
+                    ActiveDates = x.GoalProgresses.Select(y => y.ActivityDate),
+                    LastUpdateDate = x.GoalProgresses.Max(y => y.ActivityDate),
+                    CountActiveDates = x.GoalProgresses.Count()
+                })
+                .ToArrayAsync())
+                .Select(x => new 
+                {
+                    UserGoal = x.UserGoal,
+                    Goal = x.Goal,
+                    ActiveDates = x.ActiveDates.OrderByDescending(ad => ad).ToArray(),
+                    LastUpdateDate = x.LastUpdateDate,
+                    CountActiveDates = x.CountActiveDates,
+                });
+
+
+            var result = new List<UserGoalsModel>();
+
+            foreach (var g in userGoals)
+            {
+                int progress = 0;
+                int i = 0;
+                DateTime prevDate = DateTime.Now;
+                foreach (var a in g.ActiveDates)
+                {
+                    if (i == 0)
+                    {
+                        progress++;
+                    }
+                    else if ((prevDate.Date - a.Date).Days > 1)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        progress++;
+                    }
+
+                    i++;
+                    prevDate = a;
+                }
+
+                result.Add(new UserGoalsModel
+                {
+                    NameGoal = g.Goal.Name,
+                    Description = g.Goal.Description,
+                    StartDate = g.Goal.StartDate,
+                    PlannedEndDate = g.Goal.EndDate,
+                    FinishedDate = g.UserGoal.FinishDate,
+                    LastUpdateDate = g.LastUpdateDate,
+                    Value = g.Goal.Value,
+                    ValueType = g.Goal.ValueType,
+                    Progress = progress,
+                    CountActiveDays = g.CountActiveDates,
+                    isCompleted = g.UserGoal.IsCompleted,
+                    isActive = g.Goal.IsActive
+                });
+
+            }
+
+            return result;
+
+        }
     }
+    
 }

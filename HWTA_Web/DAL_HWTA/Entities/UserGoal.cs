@@ -15,6 +15,7 @@ namespace DAL_HWTA.Entities
 
         public bool IsCompleted { get; set; }
 
+        public DateTime? FinishDate { get; set; }
 
 
         [ForeignKey(nameof(UserId))]

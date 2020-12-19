@@ -115,16 +115,13 @@ namespace DAL_HWTA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime?>("FinishDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<long>("GoalId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsCompleted")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("LastUpdateDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("Progress")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("UserId")

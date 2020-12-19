@@ -9,6 +9,6 @@ namespace BLL_HWTA.Interfaces
     public interface IUserGoalsManager
     {
         Task CreateUserGoalAsync(long userId, string title,string description, DateTime startDate, DateTime endDate, int regularity, int value, string valueType);
-
+        Task<List<UserGoalsModel>> GetAllUserGoalsAsync(long userId);
     }
 }

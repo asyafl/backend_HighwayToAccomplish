@@ -55,9 +55,8 @@ namespace DAL_HWTA.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<long>(nullable: false),
                     GoalId = table.Column<long>(nullable: false),
-                    LastUpdateDate = table.Column<DateTime>(nullable: false),
-                    Progress = table.Column<int>(nullable: false),
-                    IsCompleted = table.Column<bool>(nullable: false)
+                    IsCompleted = table.Column<bool>(nullable: false),
+                    FinishDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
