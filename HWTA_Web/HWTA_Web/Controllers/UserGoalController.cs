@@ -39,7 +39,9 @@ namespace HWTA_Web.Controllers
         {
             var userId = User.ParseUserId();
 
-            var result = await _userGoalsManager.GetAllUserGoalsAsync(userId);
+            var result = (await _userGoalsManager.GetAllUserGoalsAsync(userId))
+                .OrderByDescending(x => x.StartDate);
+
 
             return Ok(result);
         }
