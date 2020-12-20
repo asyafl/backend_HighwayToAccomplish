@@ -56,9 +56,16 @@ namespace HWTA_Web.Controllers
                 picture =  memoryStream.ToArray();
             }
 
-            await _userManager.DownloadUserProfilePictureAsync(userId, picture, contentType);
-
-            return Ok();
+           var result =   await _userManager.DownloadUserProfilePictureAsync(userId, picture, contentType);
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+         
         }
 
         [HttpGet("/GetUserProfileInfo")]

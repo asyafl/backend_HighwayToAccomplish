@@ -17,6 +17,8 @@ namespace DAL_HWTA.Entities
 
         public DateTime? FinishDate { get; set; }
 
+        public DateTime? DeletedDate { get; set; }
+        public bool IsDeleted { get; set; }
 
         [ForeignKey(nameof(UserId))]
         public User User {get;set;}

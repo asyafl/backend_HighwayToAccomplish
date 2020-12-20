@@ -3,14 +3,16 @@ using System;
 using DAL_HWTA;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DAL_HWTA.Migrations
 {
     [DbContext(typeof(HwtaDbContext))]
-    partial class HwtaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201220174452_Add_isDeletedTo_userGoals")]
+    partial class Add_isDeletedTo_userGoals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

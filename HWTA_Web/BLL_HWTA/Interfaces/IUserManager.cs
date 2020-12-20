@@ -10,7 +10,7 @@ namespace BLL_HWTA.Interfaces
     {
         Task<UserFileModel> GetUserProfilePictureAsync(long userId);
 
-        Task DownloadUserProfilePictureAsync(long userId, byte[] picture, string contentType);
+        Task<bool> DownloadUserProfilePictureAsync(long userId, byte[] picture, string contentType);
 
         Task<UserProfileModel> GetUserProfileInfoAsync (long userId);
     }

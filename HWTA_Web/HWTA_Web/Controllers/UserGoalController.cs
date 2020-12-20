@@ -28,18 +28,18 @@ namespace HWTA_Web.Controllers
         {
             var userId = User.ParseUserId();
             await _userGoalsManager.CreateUserGoalAsync(userId, request.GoalTitle,
-                request.Description, request.StartDate,  request.EndDate, request.Regularity, request.Value, request.ValueType);
+                request.Description, request.StartDate, request.EndDate, request.Regularity, request.Value, request.ValueType);
 
             return Ok();
 
         }
 
-       [HttpGet("/getAllUserGoals")]
-       public async Task<IActionResult> GetAllUserGoals()
+        [HttpGet("/getAllUserGoals")]
+        public async Task<IActionResult> GetAllUserGoals()
         {
             var userId = User.ParseUserId();
 
-           var result =  await _userGoalsManager.GetAllUserGoalsAsync(userId);
+            var result = await _userGoalsManager.GetAllUserGoalsAsync(userId);
 
             return Ok(result);
         }
@@ -50,6 +50,22 @@ namespace HWTA_Web.Controllers
             var userId = User.ParseUserId();
             await _userGoalsManager.CompleteUserGoalAsync(userId, request.GoalId, request.IsCompleted);
             return Ok();
+        }
+
+        [HttpDelete("DeleteUserGoal")]
+        public async Task<IActionResult> DeleteUserGoal(DeleteUserGoalRequest request)
+        {
+            var userId = User.ParseUserId();
+            var result = await _userGoalsManager.DeletedUserGoalAsync(userId, request.GoalId);
+
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }

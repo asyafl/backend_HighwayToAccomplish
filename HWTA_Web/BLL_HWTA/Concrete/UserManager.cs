@@ -13,26 +13,35 @@ namespace BLL_HWTA.Concrete
     public class UserManager : IUserManager
     {
         private readonly HwtaDbContext _dbContext;
+
+        private readonly HashSet<string> mimeTypes = new HashSet<string>() 
+        { "image/gif", "image/jpeg", "image/pjpeg", "image/png", "image/svg+xml", 
+            "image/tiff", "image/vnd.microsoft.icon", "image/vnd.wap.wbmp", "image/webp"};
+
         public UserManager(HwtaDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task DownloadUserProfilePictureAsync(long userId, byte[] picture, string contentType)
+        public async Task<bool> DownloadUserProfilePictureAsync(long userId, byte[] picture, string contentType)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
             if(user == null)
             {
-                throw new ArgumentException("No such userId");
+                throw new ArgumentException("No such user");
+            }
+            else if (!mimeTypes.Contains(contentType))
+            {
+                return false;
             }
             else
             {
-
                 user.ContentType = contentType;
                 user.ProfilePicture = picture;
 
                 await _dbContext.SaveChangesAsync();
+                return true;
             }
 
         }

@@ -85,13 +85,34 @@ namespace BLL_HWTA.Concrete
                 UserId = userId,
                 Goal = newGoal,
                 FinishDate = null,
-                IsCompleted = false
+                IsCompleted = false, 
+                DeletedDate = null,
+                IsDeleted = false
             };
 
             _dbContext.UserGoals.Add(userGoal);
                 
                 await _dbContext.SaveChangesAsync();
             }
+
+        public async Task<bool> DeletedUserGoalAsync(long userId, long goalId)
+        {
+            var checkUserGoal = await _dbContext.UserGoals
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.GoalId == goalId && x.IsDeleted == false);
+
+            if (checkUserGoal == null)
+            {
+                return false;
+            }
+            else
+            {
+                checkUserGoal.IsDeleted = true;
+                checkUserGoal.DeletedDate = DateTime.Now;
+
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+        }
 
         public async Task<List<UserGoalsModel>> GetAllUserGoalsAsync(long userId)
         {
@@ -103,7 +124,7 @@ namespace BLL_HWTA.Concrete
             }
 
             var userGoals = (await _dbContext.UserGoals
-                .Where(x => x.UserId == userId  && x.Goal.GoalType == GoalType.Custom)
+                .Where(x => x.UserId == userId  && x.Goal.GoalType == GoalType.Custom && x.IsDeleted == false)
                 .Select(x => new {
                     UserGoal = x,
                     Goal = x.Goal,
