@@ -7,7 +7,6 @@ namespace DAL_HWTA.Entities
     public enum FriendStatus
     {
         Friend = 1, 
-        Deleted = 2, 
-        Request = 3
+        Deleted = 2
     }
 }

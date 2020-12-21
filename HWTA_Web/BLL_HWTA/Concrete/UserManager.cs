@@ -1,6 +1,7 @@
 ﻿using BLL_HWTA.Interfaces;
 using BLL_HWTA.Models;
 using DAL_HWTA;
+using DAL_HWTA.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,52 @@ namespace BLL_HWTA.Concrete
         public UserManager(HwtaDbContext dbContext)
         {
             _dbContext = dbContext;
+        }
+
+        public async Task<bool> AddFriendAsync(long userId, long friendId)
+        {
+            if (userId == friendId)
+            {
+                throw new ArgumentException("Can't be the same id");
+            }
+
+            var users = await _dbContext.Users.Where(x => x.Id == userId || x.Id == friendId).ToListAsync();
+
+            if (users.Count != 2)
+            {
+                throw new ArgumentException("No such user");
+            }
+
+            var existingFriend = await _dbContext.Friends.FirstOrDefaultAsync(x => 
+                x.UserId == userId && x.FriendId == friendId 
+                || x.FriendId == userId && x.UserId == friendId);
+
+            if (existingFriend != null && existingFriend.FriendStatus == FriendStatus.Friend)
+            {
+                return false;
+            }
+            else if (existingFriend != null && existingFriend.FriendStatus == FriendStatus.Deleted)
+            {
+                existingFriend.FriendStatus = FriendStatus.Friend;
+
+                await _dbContext.SaveChangesAsync();
+                return true;
+
+            }
+            else if (existingFriend == null)
+            {
+                _dbContext.Friends.Add(new Friend 
+                  { UserId = userId, 
+                    FriendId = friendId,
+                    FriendStatus = FriendStatus.Friend,
+                    FriendshipStartDate = DateTime.Now
+                });
+
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+            return false;
+
         }
 
         public async Task<bool> DownloadUserProfilePictureAsync(long userId, byte[] picture, string contentType)

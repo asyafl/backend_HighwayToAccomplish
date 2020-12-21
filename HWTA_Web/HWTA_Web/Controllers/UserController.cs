@@ -1,4 +1,5 @@
 ﻿using BLL_HWTA.Interfaces;
+using BLL_HWTA.Requests;
 using HWTA_Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -92,6 +93,24 @@ namespace HWTA_Web.Controllers
             {
                 return Ok(model);
             }
+        }
+
+        [HttpPost("/AddFriend")]
+        public async Task<IActionResult> AddFriend(AddFriendRequest request)
+        {
+            var userId = User.ParseUserId();
+
+            var result = await _userManager.AddFriendAsync(userId, request.FriendId);
+
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+
         }
 
     }

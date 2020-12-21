@@ -48,6 +48,34 @@ namespace DAL_HWTA.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Friends",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    UserId = table.Column<long>(nullable: false),
+                    FriendId = table.Column<long>(nullable: false),
+                    FriendStatus = table.Column<int>(nullable: false),
+                    FriendshipStartDate = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Friends", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Friends_Users_FriendId",
+                        column: x => x.FriendId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Friends_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserGoals",
                 columns: table => new
                 {
@@ -56,7 +84,9 @@ namespace DAL_HWTA.Migrations
                     UserId = table.Column<long>(nullable: false),
                     GoalId = table.Column<long>(nullable: false),
                     IsCompleted = table.Column<bool>(nullable: false),
-                    FinishDate = table.Column<DateTime>(nullable: true)
+                    FinishDate = table.Column<DateTime>(nullable: true),
+                    DeletedDate = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,7 +106,7 @@ namespace DAL_HWTA.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GoalProgress",
+                name: "GoalProgresses",
                 columns: table => new
                 {
                     Id = table.Column<long>(nullable: false)
@@ -86,9 +116,9 @@ namespace DAL_HWTA.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GoalProgress", x => x.Id);
+                    table.PrimaryKey("PK_GoalProgresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GoalProgress_UserGoals_UserGoalId",
+                        name: "FK_GoalProgresses_UserGoals_UserGoalId",
                         column: x => x.UserGoalId,
                         principalTable: "UserGoals",
                         principalColumn: "Id",
@@ -96,8 +126,18 @@ namespace DAL_HWTA.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GoalProgress_UserGoalId",
-                table: "GoalProgress",
+                name: "IX_Friends_FriendId",
+                table: "Friends",
+                column: "FriendId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Friends_UserId",
+                table: "Friends",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GoalProgresses_UserGoalId",
+                table: "GoalProgresses",
                 column: "UserGoalId");
 
             migrationBuilder.CreateIndex(
@@ -114,7 +154,10 @@ namespace DAL_HWTA.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GoalProgress");
+                name: "Friends");
+
+            migrationBuilder.DropTable(
+                name: "GoalProgresses");
 
             migrationBuilder.DropTable(
                 name: "UserGoals");

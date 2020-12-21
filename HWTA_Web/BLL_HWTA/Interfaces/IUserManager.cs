@@ -16,6 +16,6 @@ namespace BLL_HWTA.Interfaces
 
         Task <List<AllUsersModel>> GetAllUsersProfilesAsync(long userId);
 
-       // Task<bool> AddFriend(long userId, );
+        Task<bool> AddFriendAsync(long userId, long friendId );
     }
 }

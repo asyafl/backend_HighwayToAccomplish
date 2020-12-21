@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL_HWTA.Migrations
 {
     [DbContext(typeof(HwtaDbContext))]
-    [Migration("20201219162403_Initial")]
+    [Migration("20201221154544_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,33 @@ namespace DAL_HWTA.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.10");
+
+            modelBuilder.Entity("DAL_HWTA.Entities.Friend", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<long>("FriendId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("FriendStatus")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("FriendshipStartDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("FriendId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Friends");
+                });
 
             modelBuilder.Entity("DAL_HWTA.Entities.Goal", b =>
                 {
@@ -72,7 +99,7 @@ namespace DAL_HWTA.Migrations
 
                     b.HasIndex("UserGoalId");
 
-                    b.ToTable("GoalProgress");
+                    b.ToTable("GoalProgresses");
                 });
 
             modelBuilder.Entity("DAL_HWTA.Entities.User", b =>
@@ -117,6 +144,9 @@ namespace DAL_HWTA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime?>("FinishDate")
                         .HasColumnType("TEXT");
 
@@ -124,6 +154,9 @@ namespace DAL_HWTA.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsCompleted")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<long>("UserId")
@@ -136,6 +169,21 @@ namespace DAL_HWTA.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("UserGoals");
+                });
+
+            modelBuilder.Entity("DAL_HWTA.Entities.Friend", b =>
+                {
+                    b.HasOne("DAL_HWTA.Entities.User", "UserFriend")
+                        .WithMany("UserFriends")
+                        .HasForeignKey("FriendId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DAL_HWTA.Entities.User", "User")
+                        .WithMany("Users")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL_HWTA.Entities.GoalProgress", b =>

@@ -40,7 +40,7 @@ namespace DAL_HWTA.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Friend");
+                    b.ToTable("Friends");
                 });
 
             modelBuilder.Entity("DAL_HWTA.Entities.Goal", b =>
@@ -97,7 +97,7 @@ namespace DAL_HWTA.Migrations
 
                     b.HasIndex("UserGoalId");
 
-                    b.ToTable("GoalProgress");
+                    b.ToTable("GoalProgresses");
                 });
 
             modelBuilder.Entity("DAL_HWTA.Entities.User", b =>

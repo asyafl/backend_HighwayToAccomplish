@@ -43,7 +43,7 @@ namespace HWTA_Web
             services.AddAuthorization();
 
             services.AddDbContext<HwtaDbContext>(
-               options => options.UseSqlite("Data Source=hwta6.db"));
+               options => options.UseSqlite("Data Source=hwta7.db"));
 
             services.AddTransient<IAccountManager, AccountsManager>();
             services.AddTransient<IUserGoalsManager, UserGoalsManager>();

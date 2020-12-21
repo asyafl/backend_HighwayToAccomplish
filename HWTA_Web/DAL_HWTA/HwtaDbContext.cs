@@ -1,15 +1,17 @@
 ﻿using DAL_HWTA.Entities;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DAL_HWTA
 {
-   public class HwtaDbContext: DbContext
+    public class HwtaDbContext : DbContext
     {
-        public HwtaDbContext(DbContextOptions options) : base(options){}
+        public HwtaDbContext(DbContextOptions options) : base(options) { }
+
+        public DbSet<Friend> Friends { get; set; }
+
         public DbSet<Goal> Goals { get; set; }
+
+        public DbSet<GoalProgress> GoalProgresses { get; set; }
 
         public DbSet<User> Users { get; set; }
 
