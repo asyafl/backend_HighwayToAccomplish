@@ -30,7 +30,7 @@ namespace BLL_HWTA.Concrete
             }
 
             var checkGoal = await _dbContext.UserGoals
-                .FirstOrDefaultAsync(x => x.User.Id == userId && x.Goal.Id == goalId && isCompleted == false);
+                .FirstOrDefaultAsync(x => x.User.Id == userId && x.Goal.Id == goalId && x.IsCompleted == false);
 
             if(checkGoal == null)
             {
