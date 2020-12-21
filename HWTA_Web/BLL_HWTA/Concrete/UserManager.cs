@@ -58,6 +58,7 @@ namespace BLL_HWTA.Concrete
             return  await _dbContext.Users.Where(x => x.Id != userId)
                 .Select(x => new AllUsersModel
                 { 
+                    UserId = x.Id,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     Picture = x.ContentType == null || x.ProfilePicture == null ? null 
