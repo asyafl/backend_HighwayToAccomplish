@@ -15,5 +15,7 @@ namespace BLL_HWTA.Interfaces
         Task CompleteUserGoalAsync(long userId, long goalId, bool isCompleted);
 
         Task<bool> DeletedUserGoalAsync(long userId, long goalId);
+
+        Task<bool> SubmitUserGoalAsync(long userId, long goalId);
     }
 }

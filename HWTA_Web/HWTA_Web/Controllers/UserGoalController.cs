@@ -69,5 +69,21 @@ namespace HWTA_Web.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpPost("/submitedUserGoal")]
+        public async Task<IActionResult> SubmitedUserGoal(SubmitedUserGoalRequest request)
+        {
+            var userId = User.ParseUserId();
+            var result = await _userGoalsManager.SubmitUserGoalAsync(userId, request.GoalId);
+
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
     }
 }

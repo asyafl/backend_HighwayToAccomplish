@@ -191,6 +191,31 @@ namespace BLL_HWTA.Concrete
             return result;
 
         }
+
+        public async Task<bool> SubmitUserGoalAsync(long userId, long goalId)
+        {
+            var check = await _dbContext.UserGoals
+                .Include(x => x.GoalProgresses)
+                .FirstOrDefaultAsync(x => x.UserId == userId && x.GoalId == goalId);
+
+            if (check == null)
+            {
+                throw new ArgumentException("No such user with goal");
+            }
+            
+            if(check.GoalProgresses.Max(y => y.ActivityDate).Date == DateTime.Now.Date)
+            {
+                return false;
+            }
+            else
+            {
+                check.GoalProgresses.Add(new GoalProgress {ActivityDate = DateTime.Now });
+                await _dbContext.SaveChangesAsync();
+                return true;
+            }
+
+
+        }
     }
     
 }
