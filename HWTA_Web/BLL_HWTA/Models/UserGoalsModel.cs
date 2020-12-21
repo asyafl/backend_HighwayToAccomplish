@@ -16,8 +16,8 @@ namespace BLL_HWTA.Models
         public DateTime PlannedEndDate { get; set; }
         public DateTime? LastUpdateDate { get; set; }
 
-        public bool isCompleted { get; set; }
-        public bool isActive { get; set; }
+        public bool IsCompleted { get; set; }
+        public bool IsActive { get; set; }
         public int Value { get; set; }
         public string ValueType { get; set; }
     }

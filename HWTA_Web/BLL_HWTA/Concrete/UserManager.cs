@@ -46,6 +46,27 @@ namespace BLL_HWTA.Concrete
 
         }
 
+        public async Task<List<AllUsersModel>> GetAllUsersProfilesAsync(long userId)
+        {
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+
+            if (user == null)
+            {
+                throw new ArgumentException("No such user");
+            }
+
+            return  await _dbContext.Users.Where(x => x.Id != userId)
+                .Select(x => new AllUsersModel
+                { 
+                    FirstName = x.FirstName,
+                    LastName = x.LastName,
+                    Picture = x.ContentType == null || x.ProfilePicture == null ? null 
+                            : $"data:{x.ContentType};base64, " + Convert.ToBase64String(x.ProfilePicture),
+                })
+                .ToListAsync();
+
+        }
+
         public async Task<UserProfileModel> GetUserProfileInfoAsync(long userId)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);

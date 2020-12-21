@@ -182,8 +182,8 @@ namespace BLL_HWTA.Concrete
                     ValueType = g.Goal.ValueType,
                     Progress = progress,
                     CountActiveDays = g.CountActiveDates,
-                    isCompleted = g.UserGoal.IsCompleted,
-                    isActive = g.Goal.IsActive
+                    IsCompleted = g.UserGoal.IsCompleted,
+                    IsActive = g.Goal.IsActive
                 });
 
             }

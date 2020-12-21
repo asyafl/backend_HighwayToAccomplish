@@ -77,5 +77,22 @@ namespace HWTA_Web.Controllers
             return Ok(model);
         }
 
+        [HttpGet("/getAllUsersProfiles")]
+        public async Task<IActionResult> GetAllUsersProfiles()
+        {
+            var userId = User.ParseUserId();
+
+            var model = await _userManager.GetAllUsersProfilesAsync(userId);
+
+            if(model.Count == 0)
+            {
+                return BadRequest();
+            }
+            else
+            {
+                return Ok(model);
+            }
+        }
+
     }
 }

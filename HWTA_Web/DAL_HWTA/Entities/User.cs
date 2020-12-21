@@ -31,5 +31,12 @@ namespace DAL_HWTA.Entities
 
         [InverseProperty(nameof(UserGoal.User))]
         public List<UserGoal> UserGoals { get; set; }
+
+        [InverseProperty(nameof(Friend.User))]
+        public List<Friend> Users { get; set; }
+
+        [InverseProperty(nameof(Friend.UserFriend))]
+        public List<Friend> UserFriends { get; set; }
+
     }
 }
