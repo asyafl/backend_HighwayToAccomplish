@@ -46,6 +46,7 @@ namespace HWTA_Web
                options => options.UseSqlite("Data Source=hwta7.db"));
 
             services.AddTransient<IAccountManager, AccountsManager>();
+            services.AddTransient<IUserFriendsManager, UserFriendsManager>();
             services.AddTransient<IUserGoalsManager, UserGoalsManager>();
             services.AddTransient<IUserManager, UserManager>();
         }

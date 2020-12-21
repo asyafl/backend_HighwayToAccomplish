@@ -1,13 +1,10 @@
 ﻿using BLL_HWTA.Interfaces;
-using BLL_HWTA.Requests;
 using HWTA_Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HWTA_Web.Controllers
@@ -30,17 +27,17 @@ namespace HWTA_Web.Controllers
             var userId = User.ParseUserId();
             var file = await _userManager.GetUserProfilePictureAsync(userId);
 
-            if(file.ContentType == null || file.Picture == null)
+            if (file.ContentType == null || file.Picture == null)
             {
                 return NotFound();
             }
             else
             {
-                var strResult = $"data:{file.ContentType};base64, " + Convert.ToBase64String(file.Picture); 
-                return Ok(strResult); 
+                var strResult = $"data:{file.ContentType};base64, " + Convert.ToBase64String(file.Picture);
+                return Ok(strResult);
             }
 
-            
+
         }
 
         [HttpPost("/LoadProfilePicture")]
@@ -54,10 +51,10 @@ namespace HWTA_Web.Controllers
             using (var memoryStream = new MemoryStream())
             {
                 await uploadedFile.CopyToAsync(memoryStream);
-                picture =  memoryStream.ToArray();
+                picture = memoryStream.ToArray();
             }
 
-           var result =   await _userManager.DownloadUserProfilePictureAsync(userId, picture, contentType);
+            var result = await _userManager.DownloadUserProfilePictureAsync(userId, picture, contentType);
             if (result)
             {
                 return Ok();
@@ -66,7 +63,7 @@ namespace HWTA_Web.Controllers
             {
                 return BadRequest();
             }
-         
+
         }
 
         [HttpGet("/GetUserProfileInfo")]
@@ -85,7 +82,7 @@ namespace HWTA_Web.Controllers
 
             var model = await _userManager.GetAllUsersProfilesAsync(userId);
 
-            if(model.Count == 0)
+            if (model.Count == 0)
             {
                 return BadRequest();
             }
@@ -95,23 +92,6 @@ namespace HWTA_Web.Controllers
             }
         }
 
-        [HttpPost("/AddFriend")]
-        public async Task<IActionResult> AddFriend(AddFriendRequest request)
-        {
-            var userId = User.ParseUserId();
-
-            var result = await _userManager.AddFriendAsync(userId, request.FriendId);
-
-            if (result)
-            {
-                return Ok();
-            }
-            else
-            {
-                return BadRequest();
-            }
-
-        }
 
     }
 }
