@@ -25,7 +25,7 @@ namespace BLL_HWTA.Concrete
 
         public async Task<bool> AddUserAsync(string email, string password, string firstName, string lastName)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Email == email.ToLower());
 
             if (user == null)
             {
@@ -33,7 +33,7 @@ namespace BLL_HWTA.Concrete
                     .Add(
                     new User
                     {
-                        Email = email,
+                        Email = email.ToLower(),
                         PasswordHash = ComputeSHA512(password),
                         Role = Role.User,
                         FirstName = firstName,
@@ -66,52 +66,52 @@ namespace BLL_HWTA.Concrete
 
             return null;
         }
-    
-    public string GetToken(ClaimsIdentity identity)
-    {
-        var now = DateTime.UtcNow;
-        var jwt = new JwtSecurityToken(
-                issuer: AuthOptions.ISSUER,
-                audience: AuthOptions.AUDIENCE,
-                notBefore: now,
-                claims: identity.Claims,
-                expires: now.Add(TimeSpan.FromHours(24)),
-                signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
-        var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-        return encodedJwt;
-    }
-
-
-
-
-    private async Task<User> LoginAsync(string email, string password)
-    {
-        var user = await _dbContext.Users
-            .FirstOrDefaultAsync(x => x.Email == email.ToLower());
-
-        if (user == null)
+        public string GetToken(ClaimsIdentity identity)
         {
+            var now = DateTime.UtcNow;
+            var jwt = new JwtSecurityToken(
+                    issuer: AuthOptions.ISSUER,
+                    audience: AuthOptions.AUDIENCE,
+                    notBefore: now,
+                    claims: identity.Claims,
+                    expires: now.Add(TimeSpan.FromHours(24)),
+                    signingCredentials: new SigningCredentials(AuthOptions.GetSymmetricSecurityKey(), SecurityAlgorithms.HmacSha256));
+            var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+            return encodedJwt;
+        }
+
+
+
+
+        private async Task<User> LoginAsync(string email, string password)
+        {
+            var user = await _dbContext.Users
+                .FirstOrDefaultAsync(x => x.Email == email.ToLower());
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var output = ComputeSHA512(password);
+
+            if (output.SequenceEqual(user.PasswordHash))
+            {
+                return user;
+            }
+
             return null;
         }
 
-        var output = ComputeSHA512(password);
-
-        if (output.SequenceEqual(user.PasswordHash))
+        private byte[] ComputeSHA512(string password)
         {
-            return user;
+            using SHA512 sha = SHA512.Create();
+
+            return sha.ComputeHash(Encoding.UTF8.GetBytes(password));
+
         }
 
-        return null;
     }
-
-    private byte[] ComputeSHA512(string password)
-    {
-        using SHA512 sha = SHA512.Create();
-
-        return sha.ComputeHash(Encoding.UTF8.GetBytes(password));
-
-    }
-
-}
 }
