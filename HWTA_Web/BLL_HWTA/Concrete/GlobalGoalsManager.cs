@@ -37,5 +37,44 @@ namespace BLL_HWTA.Concrete
                 })
                 .ToListAsync();
         }
+
+        public async Task<bool> TakePartInGlobalGoalsAsync(long userId, long goalId)
+        {
+            var checkUserId = await _dbContext.Users.AnyAsync(x => x.Id == userId);
+            var checGoalId = await _dbContext.Goals.AnyAsync(x => x.Id == goalId && x.GoalType == GoalType.Global);
+
+            if (!checkUserId)
+            {
+                throw new ArgumentException("No such user");
+            }
+
+            if (!checGoalId)
+            {
+                throw new ArgumentException("No such global goal");
+            }
+
+            var exist = await _dbContext.UserGoals
+                .FirstOrDefaultAsync(x => x.UserId  == userId && x.GoalId == goalId && x.Goal.GoalType == GoalType.Global);
+
+            if(exist != null)
+            {
+                return false;
+            }
+            else
+            {
+                _dbContext.UserGoals.Add(new UserGoal 
+                { 
+                    UserId = userId, 
+                    GoalId = goalId,
+                    IsCompleted = false, 
+                    StartDate = DateTime.Now, 
+                    IsDeleted = false,
+                });
+
+               await _dbContext.SaveChangesAsync();
+                return true;
+            }
+
+        }
     }
 }

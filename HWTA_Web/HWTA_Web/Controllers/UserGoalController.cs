@@ -71,7 +71,7 @@ namespace HWTA_Web.Controllers
         }
 
         [HttpPost("/submitedUserGoal")]
-        public async Task<IActionResult> SubmitedUserGoal(SubmitedUserGoalRequest request)
+        public async Task<IActionResult> SubmitedUserGoal(GoalRequest request)
         {
             var userId = User.ParseUserId();
             var result = await _userGoalsManager.SubmitUserGoalAsync(userId, request.GoalId);

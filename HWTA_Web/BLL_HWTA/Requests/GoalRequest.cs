@@ -4,7 +4,7 @@ using System.Text;
 
 namespace BLL_HWTA.Requests
 {
-   public class SubmitedUserGoalRequest
+   public class GoalRequest
     {
         public long GoalId { get; set; }
     }

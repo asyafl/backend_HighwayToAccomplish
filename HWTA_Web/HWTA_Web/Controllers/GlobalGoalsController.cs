@@ -1,10 +1,8 @@
 ﻿using BLL_HWTA.Interfaces;
+using BLL_HWTA.Requests;
+using HWTA_Web.Extensions;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HWTA_Web.Controllers
@@ -27,6 +25,23 @@ namespace HWTA_Web.Controllers
             var result = await _globalGoalsManager.GetAllGlobalGoalsAsync();
 
             return Ok(result);
+        }
+
+        [HttpPost("/takePartInGlobalGoal")]
+        public async Task<IActionResult> TakePartInGlobalGoal(GoalRequest request)
+        {
+            var userId = User.ParseUserId();
+
+            var result = await _globalGoalsManager.TakePartInGlobalGoalsAsync(userId, request.GoalId);
+
+            if (result)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
     }
 }
