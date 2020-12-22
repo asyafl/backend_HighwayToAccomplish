@@ -82,14 +82,8 @@ namespace HWTA_Web.Controllers
 
             var model = await _userManager.GetAllUsersProfilesAsync(userId);
 
-            if (model.Count == 0)
-            {
-                return BadRequest();
-            }
-            else
-            {
                 return Ok(model);
-            }
+            
         }
 
 

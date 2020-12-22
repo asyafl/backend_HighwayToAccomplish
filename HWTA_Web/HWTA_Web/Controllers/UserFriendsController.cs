@@ -64,14 +64,8 @@ namespace HWTA_Web.Controllers
 
             var result = await _userFriendsManager.GetAllFriendsAsync(userId);
 
-            if(result.Count() == 0)
-            {
-                return BadRequest();
-            }
-            else
-            {
                 return Ok(result);
-            }
+            
         }
     }
 }

@@ -54,7 +54,7 @@ namespace HWTA_Web.Controllers
             return Ok();
         }
 
-        [HttpDelete("DeleteUserGoal")]
+        [HttpDelete("/DeleteUserGoal")]
         public async Task<IActionResult> DeleteUserGoal(DeleteUserGoalRequest request)
         {
             var userId = User.ParseUserId();
