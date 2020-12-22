@@ -11,7 +11,7 @@ namespace DAL_HWTA.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public GoalType GoalType { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime CreationDate { get; set; }
         public DateTime EndDate { get; set; }
         public int Regularity { get; set; }
 

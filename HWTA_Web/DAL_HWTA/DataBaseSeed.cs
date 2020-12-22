@@ -13,7 +13,7 @@ namespace DAL_HWTA
 
         public void Seed()
         {
-            if (!_dbContext.Goals.Any())
+            if (!_dbContext.Goals.Any(x =>x.GoalType == GoalType.Global))
             {
                 CreateGoals();
             }       
@@ -22,13 +22,16 @@ namespace DAL_HWTA
         private void CreateGoals()
         {
             _dbContext.Goals.AddRange(new Goal[] {
-            new Goal{ Name = "Lose Weight" },
-            new Goal{ Name = "Quit Smoking" },
-            new Goal{ Name = "Exercise Regularly"},
-            new Goal{ Name = "Maintain Weight" },
-            new Goal{ Name = "Race" },
+            new Goal{
+                Name = "Sport every day",
+                Description = "Make any exercises every day till New Year",
+                GoalType = GoalType.Global,
+                CreationDate = new System.DateTime(2020, 12, 01), 
+                EndDate = new System.DateTime(2020, 12, 31),
+                IsActive = true
+            }
 
-            });
+            }); 
 
             _dbContext.SaveChanges();
         }

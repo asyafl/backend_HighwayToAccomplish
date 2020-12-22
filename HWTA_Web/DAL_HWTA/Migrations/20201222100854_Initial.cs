@@ -16,7 +16,7 @@ namespace DAL_HWTA.Migrations
                     Name = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     GoalType = table.Column<int>(nullable: false),
-                    StartDate = table.Column<DateTime>(nullable: false),
+                    CreationDate = table.Column<DateTime>(nullable: false),
                     EndDate = table.Column<DateTime>(nullable: false),
                     Regularity = table.Column<int>(nullable: false),
                     Value = table.Column<int>(nullable: false),
@@ -84,6 +84,7 @@ namespace DAL_HWTA.Migrations
                     UserId = table.Column<long>(nullable: false),
                     GoalId = table.Column<long>(nullable: false),
                     IsCompleted = table.Column<bool>(nullable: false),
+                    StartDate = table.Column<DateTime>(nullable: false),
                     FinishDate = table.Column<DateTime>(nullable: true),
                     DeletedDate = table.Column<DateTime>(nullable: true),
                     IsDeleted = table.Column<bool>(nullable: false)

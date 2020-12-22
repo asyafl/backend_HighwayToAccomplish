@@ -49,6 +49,9 @@ namespace DAL_HWTA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
@@ -66,9 +69,6 @@ namespace DAL_HWTA.Migrations
 
                     b.Property<int>("Regularity")
                         .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("Value")
                         .HasColumnType("INTEGER");
@@ -156,6 +156,9 @@ namespace DAL_HWTA.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("UserId")
                         .HasColumnType("INTEGER");

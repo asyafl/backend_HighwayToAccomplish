@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DAL_HWTA.Migrations
 {
     [DbContext(typeof(HwtaDbContext))]
-    [Migration("20201221154544_Initial")]
+    [Migration("20201222100854_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -51,6 +51,9 @@ namespace DAL_HWTA.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
@@ -68,9 +71,6 @@ namespace DAL_HWTA.Migrations
 
                     b.Property<int>("Regularity")
                         .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("Value")
                         .HasColumnType("INTEGER");
@@ -158,6 +158,9 @@ namespace DAL_HWTA.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("TEXT");
 
                     b.Property<long>("UserId")
                         .HasColumnType("INTEGER");

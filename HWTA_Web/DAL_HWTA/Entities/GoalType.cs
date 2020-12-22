@@ -7,6 +7,6 @@ namespace DAL_HWTA.Entities
     public enum GoalType
     {
         Custom = 1, 
-        Seasonal = 2
+        Global = 2
     }
 }

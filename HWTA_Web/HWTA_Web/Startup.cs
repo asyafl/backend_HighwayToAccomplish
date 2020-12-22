@@ -43,9 +43,10 @@ namespace HWTA_Web
             services.AddAuthorization();
 
             services.AddDbContext<HwtaDbContext>(
-               options => options.UseSqlite("Data Source=hwta7.db"));
+               options => options.UseSqlite("Data Source=hwta8.db"));
 
             services.AddTransient<IAccountManager, AccountsManager>();
+            services.AddTransient<IGlobalGoalsManager, GlobalGoalsManager>();
             services.AddTransient<IUserFriendsManager, UserFriendsManager>();
             services.AddTransient<IUserGoalsManager, UserGoalsManager>();
             services.AddTransient<IUserManager, UserManager>();
@@ -55,8 +56,8 @@ namespace HWTA_Web
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, HwtaDbContext context)
         {
             context.Database.Migrate();
-            // var dbSeed = new DataBaseSeed(context);
-            // dbSeed.Seed();
+             var dbSeed = new DataBaseSeed(context);
+             dbSeed.Seed();
 
             if (env.IsDevelopment())
             {

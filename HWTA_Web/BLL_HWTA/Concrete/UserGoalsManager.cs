@@ -67,7 +67,7 @@ namespace BLL_HWTA.Concrete
                 Name = title,
                 Description = description,
                 GoalType = GoalType.Custom,
-                StartDate = startDate,
+                CreationDate = DateTime.Now,
                 EndDate = endDate,
                 Regularity = regularity,
                 Value = value,
@@ -87,7 +87,8 @@ namespace BLL_HWTA.Concrete
                 FinishDate = null,
                 IsCompleted = false, 
                 DeletedDate = null,
-                IsDeleted = false
+                IsDeleted = false,
+                StartDate = startDate,
             };
 
             _dbContext.UserGoals.Add(userGoal);
@@ -174,7 +175,7 @@ namespace BLL_HWTA.Concrete
                     GoalId = g.Goal.Id,
                     NameGoal = g.Goal.Name,
                     Description = g.Goal.Description,
-                    StartDate = g.Goal.StartDate,
+                    StartDate = g.UserGoal.StartDate,
                     PlannedEndDate = g.Goal.EndDate,
                     FinishedDate = g.UserGoal.FinishDate,
                     LastUpdateDate = g.LastUpdateDate,
