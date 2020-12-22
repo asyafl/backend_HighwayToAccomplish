@@ -116,7 +116,7 @@ namespace BLL_HWTA.Concrete
 
 
             var friendsIds = (await _dbContext.Friends
-                .Where(x => x.UserId == userId || x.FriendId == userId && x.FriendStatus == FriendStatus.Friend)
+                .Where(x => (x.UserId == userId || x.FriendId == userId) && x.FriendStatus == FriendStatus.Friend)
                 .ToArrayAsync())
                 .SelectMany(x => new[] { x.FriendId, x.UserId })
                 .Distinct()
