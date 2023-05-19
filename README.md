@@ -1,41 +1,23 @@
 # backend_HighwayToAccomplish
 
-Идея: приложение для отслеживания достижения и соревнования между людьми
+Idea: application for tracking achievement and competition between people
 
+User script:
 
-Юзер сценарий:
+user registers
 
- - пользователь регистрируется
+creates new targets (selects from the list of prepared ones)
 
- - создает новые цели (выбирает из списка заготовленных)
+notes progress on them daily (I don’t smoke for 10 days, I do a press for 17 days, I don’t have sweets for 5 days)
 
- - ежедневно отмечает по ним прогресс (10 дней не курю, 17 день качаю пресс, 5 дней без сладкого)
+receives badges (any other form of motivation) for achieving or progressing goals
 
- - получает бейджи (любая другая форма мотивации) за достижения целей или их прогресса
+competes with other people for common goals (such as quitting smoking)
 
- - соревнуется с другими людьми в общих целях (типа бросить курить)
+receives points for completed achievements (3 goals per month, etc.), account modifiers are available for points (special avatar, etc.)
 
- - получает балы за выполненные ачивки (3 цели в месяц и тд), за балы доступны модификаторы аккаунта (особый аватар и тд)
+there must be seasonal events (in honor of the new year 10 push-ups) - confirmation in the form of a photo or video
 
- - должны быть сезонные ивенты (в честь нового года 10 отжиманий) - подтверждение в виде фото или видео
+UI Landing Registration / authorization Dashboard (master page) Page for adding new goals Page for tracking progress for each goal Seasonal event page Page for adding progress for goals Profile page (you can view other people's pages) Achievements page (similar to Heroes.epam.com)
 
-
-
-UI
-Лендинг
-	Регистрация / авторизация
-	Дешборд (мастер страница)
-	Страница добавления новых целей
-	Страница отслеживания прогресса по каждой цели
-	Страница сезонного события
-	Страница для добавления прогресса по целям
-	Страница профиля (можно смотреть страницы других людей)
-	Страница достижений (аналог Heroes.epam.com)
-
-
-
-Back
-Вылито в мир
-	Возможность экспорта данных по профилям (выгрузки)
-	Кеширование по регионам 
-	Открытый апи с документацией 
+Back Poured into the world Ability to export data by profiles (uploads) Caching by region Open api with documentation
